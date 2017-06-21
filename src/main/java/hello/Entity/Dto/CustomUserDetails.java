@@ -13,12 +13,14 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 
+import static org.apache.tomcat.jni.SSL.setPassword;
+
 /**
  * Created by ELLLisa on 2017/6/21.
  */
 @Getter
 @ToString
-public class CustomUserDetails extends User implements UserDetails {
+public abstract  class CustomUserDetails extends User implements UserDetails {
 
     private final boolean enabled;
     private final boolean accountNonExpired;
@@ -28,7 +30,7 @@ public class CustomUserDetails extends User implements UserDetails {
 
     public CustomUserDetails(User user, boolean enabled, boolean accountNonExpired, boolean credentialsNonExpired, boolean accountNonLocked, Collection<? extends GrantedAuthority> authorities) {
         if (user != null && !StringUtils.isBlank(user.getUsername()) && !StringUtils.isBlank(user.getPassword())) {
-            setUsername(user.getUsername());
+            //setUsername(user.getUsername());
             setPassword(user.getPassword());
             this.enabled = enabled;
             this.accountNonExpired = accountNonExpired;
@@ -39,5 +41,8 @@ public class CustomUserDetails extends User implements UserDetails {
             throw new IllegalArgumentException("Cannot pass null or empty values to constructor");
         }
     }
+
+
+
 
 }

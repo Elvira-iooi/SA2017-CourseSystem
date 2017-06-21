@@ -6,7 +6,6 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 import lombok.experimental.Accessors;
-
 import java.io.Serializable;
 
 /**
@@ -19,7 +18,7 @@ import java.io.Serializable;
 @ToString
 public class Student extends PageHelperEntity {
 
-    private Long id;
+    private Long  id;
     private String studentname;
     private String department;
     private String grade;
@@ -39,5 +38,57 @@ public class Student extends PageHelperEntity {
         this.exam_grade = exam_grade != null ? usual_grade : 0;
     }
 
-}
+    public String getStudentname() {
+        return studentname;
+    }
 
+
+    public Long getId() {
+        return id;
+    }
+
+
+    public String getDepartment() {
+        return department;
+    }
+
+
+    public String getGrade() {
+        return grade;
+    }
+
+
+    public Integer getUsual_grade() {
+        return usual_grade;
+    }
+
+
+    public Integer getDesign_grade() {
+        return design_grade;
+    }
+
+
+    public Integer getExam_grade() {
+        return exam_grade;
+    }
+
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+
+    public void setStudentname(String studentname) {
+        this.studentname = studentname;
+    }
+
+
+    public void setDepartment(String department) {
+        this.department = department;
+    }
+
+
+    public void setGrade(String grade) {
+        this.grade = grade;
+    }
+}

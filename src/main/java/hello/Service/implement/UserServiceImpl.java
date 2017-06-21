@@ -5,15 +5,19 @@ import hello.Entity.User;
 import hello.Repository.UserRepository;
 import hello.Service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
+import java.util.Collection;
 import java.util.Optional;
 
+
 /**
- * Created by ELLLisa on 2017/6/21.
+ * Created by luping on 2017/6/22.
  */
+
 @Service
 public class UserServiceImpl implements UserService {
 
@@ -31,7 +35,32 @@ public class UserServiceImpl implements UserService {
         if (user == null) {
             throw new UsernameNotFoundException("Could not find the user '" + username + "'");
         }
-        return new CustomUserDetails(user, true, true, true, true, null);
+        return new CustomUserDetails(user, true, true, true, true, null) {
+            @Override
+            public Collection<? extends GrantedAuthority> getAuthorities() {
+                return null;
+            }
+
+            @Override
+            public boolean isAccountNonExpired() {
+                return false;
+            }
+
+            @Override
+            public boolean isAccountNonLocked() {
+                return false;
+            }
+
+            @Override
+            public boolean isCredentialsNonExpired() {
+                return false;
+            }
+
+            @Override
+            public boolean isEnabled() {
+                return false;
+            }
+        };
     }
 
     @Override

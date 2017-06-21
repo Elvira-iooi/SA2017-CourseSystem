@@ -11,8 +11,8 @@ import org.springframework.batch.core.configuration.annotation.StepBuilderFactor
 import org.springframework.batch.core.launch.support.RunIdIncrementer;
 import org.springframework.batch.item.ItemReader;
 import org.springframework.batch.item.ItemWriter;
-import org.springframework.batch.item.excel.RowMapper;
-import org.springframework.batch.item.excel.poi.PoiItemReader;
+//import org.springframework.batch.item.excel.RowMapper;
+//import org.springframework.batch.item.excel.poi.PoiItemReader;
 import org.springframework.batch.item.support.CompositeItemWriter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
@@ -24,9 +24,11 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
 
+
 /**
- * Created by ELLLisa on 2017/6/21.
+ * Created by luping on 2017/6/22.
  */
+
 @Service
 @Configuration
 @EnableAutoConfiguration
@@ -43,7 +45,7 @@ public class BatchConfiguration {
     public SqlSessionFactory sqlSessionFactory;
 
     @Bean
-    public ItemReader<Student> reader() {
+    public PoiItemReader<Student> reader() {
         PoiItemReader<Student> reader = new PoiItemReader<>();
         reader.setLinesToSkip(4);
         reader.setResource(new ClassPathResource("students.xlsx"));
@@ -51,7 +53,7 @@ public class BatchConfiguration {
         return reader;
     }
 
-    private RowMapper<Student> studentRowMapper() {
+    private StudentExcelRowMapper studentRowMapper() {
         return new StudentExcelRowMapper();
     }
 
@@ -77,7 +79,7 @@ public class BatchConfiguration {
     @Bean
     public Step step() {
         return stepBuilderFactory.get("step").<Student, Student>chunk(4)
-                .reader(reader())
+                .reader((ItemReader<? extends Student>) reader())
                 .processor(processor())
                 .writer(writer())
                 .build();
